@@ -1,933 +1,520 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>1978 무오년 경진일주 전용 정통 운세</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Pretendard Font -->
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <!-- Phosphor Icons -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
-                    },
-                    colors: {
-                        shinhan: {
-                            50: '#f0f5ff',
-                            100: '#e0ebff',
-                            500: '#0046ff',
-                            600: '#0037c8',
-                            800: '#002075',
-                            900: '#081530',
-                        },
-                        hanji: {
-                            50: '#fdfbf7',
-                            100: '#f7f3e8',
-                            200: '#ece3ce',
-                        }
-                    }
-                }
-            }
-        }
-// ===== [추가] GitHub Actions가 생성한 fortune_data.json 실시간 연동 =====
-let shinhanRealData = null;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>신한라이프 오늘의 운세 (1978.12.07 전용)</title>
 
-async function syncWithShinhanJson(targetType = 'today') {
-  try {
-    // 캐시 방지를 위해 현재 시간 파라미터 추가
-    const res = await fetch('./fortune_data.json?t=' + Date.now());
-    if (!res.ok) throw new Error('JSON 파일을 찾을 수 없습니다.');
-    
-    shinhanRealData = await res.json();
-    const dayData = targetType === 'tomorrow' ? shinhanRealData.tomorrow : shinhanRealData.today;
+  <!-- 안드로이드 크롬 '홈 화면에 추가 / 앱 설치' 활성화를 위한 PWA Manifest -->
+  <link rel="manifest" href='data:application/manifest+json,{"name":"1978.12.07 전용 신한운세","short_name":"오늘의운세","start_url":"./index.html","display":"standalone","background_color":"#f8fafc","theme_color":"#0f172a"}' />
 
-    if (dayData && dayData.status === 'success' && (dayData.paragraphs?.length > 0 || dayData.rawText)) {
-      // 1. 총점 반영 (추출된 점수가 있을 경우)
-      if (dayData.score) {
-        const scoreEl = document.querySelector('#score-value, .score-num, [data-role="score"]');
-        if (scoreEl) scoreEl.innerText = dayData.score;
-      }
-
-      // 2. 행운의 색 반영
-      if (dayData.luckyColor) {
-        const colorEl = document.querySelector('#lucky-color-name, .lucky-color, [data-role="lucky-color"]');
-        if (colorEl) colorEl.innerText = dayData.luckyColor;
-      }
-
-      // 3. 총평 본문 교체 (신한라이프 원문 그대로 출력)
-      const summaryContainer = document.querySelector('#fortune-summary, .fortune-content, #total-review, main');
-      const bodyHtml = (dayData.paragraphs && dayData.paragraphs.length > 0)
-        ? dayData.paragraphs.map(p => `<p style="margin-bottom:12px; line-height:1.7;">${p}</p>`).join('')
-        : `<pre style="white-space:pre-wrap; font-family:inherit; line-height:1.6;">${dayData.rawText}</pre>`;
-
-      // 화면 상단에 연동 완료 배지 및 원문 출력 박스 삽입
-      let realBox = document.getElementById('shinhan-real-box');
-      if (!realBox) {
-        realBox = document.createElement('div');
-        realBox.id = 'shinhan-real-box';
-        realBox.style.cssText = 'background:#fffdf9; border:2px solid #2563eb; border-radius:16px; padding:18px; margin:16px 0; box-shadow:0 4px 12px rgba(37,99,235,0.08);';
-        document.body.prepend(realBox);
-      }
-
-      realBox.innerHTML = `
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">
-          <span style="background:#2563eb; color:#fff; font-size:12px; font-weight:700; padding:4px 10px; border-radius:20px;">
-            ✓ 신한라이프 원문 연동됨 (${dayData.date})
-          </span>
-          <span style="font-size:11px; color:#64748b;">업데이트: ${shinhanRealData.updatedAtKST}</span>
-        </div>
-        ${dayData.score ? `<div style="font-size:18px; font-weight:800; color:#1e293b; margin-bottom:8px;">오늘의 총점: <span style="color:#2563eb;">${dayData.score}점</span> ${dayData.luckyColor ? `| 행운의 색: ${dayData.luckyColor}` : ''}</div>` : ''}
-        <div style="font-size:14.5px; color:#334155;">${bodyHtml}</div>
-      `;
-    } else {
-      console.warn('fortune_data.json 안에 유효한 신한라이프 운세 본문이 없습니다:', dayData);
+  <style>
+    :root {
+      --primary: #0046ff;
+      --primary-dark: #0033cc;
+      --bg: #f4f6fb;
+      --card: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --accent-bg: #eff6ff;
     }
-  } catch (err) {
-    console.warn('JSON 로드 실패 (기본 내장 운세가 표시됩니다):', err);
-  }
-}
 
-// 페이지 로드 시 자동 실행
-window.addEventListener('DOMContentLoaded', () => syncWithShinhanJson('today'));
-    </script>
-    <style>
-        body {
-            background-color: #cbd5e1;
-            font-family: 'Pretendard', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .gauge-circle {
-            transition: stroke-dashoffset 0.9s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: rotate(-90deg);
-            transform-origin: 50% 50%;
-        }
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #94a3b8;
-            border-radius: 4px;
-        }
-        .fade-enter {
-            animation: fadeIn 0.3s ease-out forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      padding-bottom: 48px;
+    }
+
+    .app-container {
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+    }
+
+    /* 상단 헤더 (사주 고정 프로필) */
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      color: #ffffff;
+      padding: 24px 20px 20px;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.15);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .sync-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.15);
+      color: #93c5fd;
+    }
+
+    .sync-badge.ok {
+      background: rgba(34, 197, 94, 0.2);
+      color: #86efac;
+    }
+
+    .sync-badge.err {
+      background: rgba(239, 68, 68, 0.25);
+      color: #fca5a5;
+    }
+
+    .refresh-btn {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      font-size: 12px;
+      padding: 5px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .profile-title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .profile-sub {
+      font-size: 13px;
+      color: #cbd5e1;
+      margin-bottom: 14px;
+    }
+
+    /* 사주원국 4기둥 요약 바 */
+    .pillars-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 10px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .pillar-item {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    .pillar-item strong {
+      display: block;
+      font-size: 15px;
+      color: #ffffff;
+      margin-top: 2px;
+    }
+
+    /* 오늘 / 내일 전환 탭 */
+    .tab-bar {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 16px 16px 0;
+      background: #e2e8f0;
+      padding: 5px;
+      border-radius: 14px;
+    }
+
+    .tab-btn {
+      border: none;
+      background: transparent;
+      padding: 11px 0;
+      font-size: 14px;
+      font-weight: 700;
+      color: #475569;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      background: #ffffff;
+      color: var(--primary);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    /* 메인 컨텐츠 영역 */
+    main {
+      padding: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 14px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+    }
+
+    .date-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .date-label {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .updated-time {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* 총점 및 행운의 색 요약 그리드 */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .metric-box {
+      background: var(--accent-bg);
+      border: 1px solid #dbeafe;
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .metric-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #3b82f6;
+      margin-bottom: 4px;
+    }
+
+    .metric-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: #1e3a8a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .color-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid rgba(0,0,0,0.15);
+      display: inline-block;
+    }
+
+    /* 신한라이프 총평 본문 */
+    .section-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .fortune-paragraph {
+      font-size: 15px;
+      color: #334155;
+      line-height: 1.75;
+      margin-bottom: 14px;
+      word-break: keep-all;
+      background: #f8fafc;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border-left: 4px solid var(--primary);
+    }
+
+    .fortune-paragraph:last-child {
+      margin-bottom: 0;
+    }
+
+    /* 원문 전체보기 (Raw Text) 토글 */
+    details.raw-viewer {
+      margin-top: 14px;
+      background: #f1f5f9;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 13px;
+    }
+
+    details.raw-viewer summary {
+      font-weight: 700;
+      color: #475569;
+      cursor: pointer;
+    }
+
+    .raw-pre {
+      margin-top: 10px;
+      white-space: pre-wrap;
+      word-break: break-all;
+      font-family: monospace;
+      font-size: 12px;
+      color: #334155;
+      background: #ffffff;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      max-height: 360px;
+      overflow-y: auto;
+    }
+
+    /* 에러 또는 빈 데이터 안내 박스 */
+    .status-box {
+      text-align: center;
+      padding: 28px 16px;
+    }
+
+    .status-box h3 {
+      font-size: 16px;
+      color: #dc2626;
+      margin-bottom: 8px;
+    }
+
+    .status-box p {
+      font-size: 13.5px;
+      color: #475569;
+      margin-bottom: 14px;
+    }
+
+    .direct-link-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: #0f172a;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 14px;
+      border-radius: 14px;
+      margin-top: 8px;
+    }
+  </style>
 </head>
-<body class="min-h-screen flex justify-center items-start sm:py-6">
+<body>
+  <div class="app-container">
+    <!-- 상단 고정 프로필 헤더 -->
+    <header>
+      <div class="header-top">
+        <span id="sync-badge" class="sync-badge">데이터 확인 중...</span>
+        <button class="refresh-btn" onclick="fetchFortuneJson()">↻ 새로고침</button>
+      </div>
+      <div class="profile-title">1978년 12월 7일 (양력) 오전 8시</div>
+      <div class="profile-sub">신한라이프 정통운세 실제 데이터 연동 전용</div>
 
-    <!-- Mobile App Container (Max width 440px) -->
-    <div class="w-full max-w-[440px] min-h-screen sm:min-h-[860px] sm:rounded-[36px] bg-slate-50 shadow-2xl overflow-hidden flex flex-col relative border border-slate-200">
-        
-        <!-- Top Dedicated Saju Header -->
-        <header class="bg-gradient-to-br from-shinhan-900 via-shinhan-800 to-shinhan-600 text-white pt-6 pb-6 px-5 relative overflow-hidden">
-            <!-- Decorative Oriental Circles -->
-            <div class="absolute -right-10 -top-10 w-44 h-44 rounded-full border-[18px] border-white/5 pointer-events-none"></div>
-            <div class="absolute right-14 top-20 w-24 h-24 rounded-full border-[10px] border-amber-400/5 pointer-events-none"></div>
+      <div class="pillars-bar">
+        <div class="pillar-item">시주(진시)<strong>庚辰 (경진)</strong></div>
+        <div class="pillar-item">일주(본원)<strong>庚辰 (경진)</strong></div>
+        <div class="pillar-item">월주<strong>癸亥 (계해)</strong></div>
+        <div class="pillar-item">년주(말띠)<strong>戊午 (무오)</strong></div>
+      </div>
+    </header>
 
-            <!-- App Bar -->
-            <div class="flex items-center justify-between mb-4 relative z-10">
-                <div class="flex items-center gap-2.5">
-                    <span class="w-9 h-9 rounded-xl bg-amber-400/20 border border-amber-300/30 backdrop-blur-sm flex items-center justify-center text-amber-300 shadow-inner">
-                        <i class="ph-fill ph-compass text-xl"></i>
-                    </span>
-                    <div>
-                        <div class="flex items-center gap-1.5">
-                            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-400 text-slate-950 tracking-tight">전용 사주</span>
-                            <span class="text-[11px] font-medium text-blue-200">신한생명 정통 명리학 기반</span>
-                        </div>
-                        <h1 class="text-lg font-extrabold tracking-tight mt-0.5">나만의 평생 일일운세</h1>
-                    </div>
-                </div>
-                <button onclick="toggleWonGukDetail()" class="flex items-center gap-1 text-xs font-semibold bg-white/15 hover:bg-white/25 active:scale-95 transition px-3 py-1.5 rounded-full backdrop-blur-sm border border-white/20">
-                    <i class="ph ph-yin-yang text-sm text-amber-300"></i>
-                    <span id="wonGukToggleBtnText">명식 상세</span>
-                </button>
-            </div>
-
-            <!-- Fixed Owner Profile Banner (1978.12.07 08:00 Solar) -->
-            <div class="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-3.5 relative z-10">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-300 via-amber-400 to-amber-600 text-slate-900 flex flex-col items-center justify-center shadow-md shrink-0">
-                            <span class="text-xl leading-none">🐴</span>
-                            <span class="text-[9px] font-extrabold tracking-tighter mt-0.5">戊午年</span>
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-1.5 flex-wrap">
-                                <span class="font-extrabold text-base text-white">1978년 12월 7일생</span>
-                                <span id="genderBadge" onclick="toggleGender()" title="클릭하여 건명/곤명 전환" class="cursor-pointer text-[11px] px-2 py-0.5 rounded-full bg-blue-500/40 hover:bg-blue-500/60 border border-blue-300/40 text-blue-50 font-semibold transition">
-                                    건명(乾命)
-                                </span>
-                            </div>
-                            <p class="text-xs text-blue-100/90 mt-0.5">
-                                양력 · 오전 08시 00분 <span class="text-amber-300 font-semibold">진시(辰時)</span> 출생
-                            </p>
-                        </div>
-                    </div>
-                    <div class="text-right shrink-0">
-                        <span class="text-[10px] text-blue-200 block">타고난 일주(본원)</span>
-                        <span class="text-xs font-extrabold text-amber-300">경진(庚辰) 백호금</span>
-                    </div>
-                </div>
-
-                <!-- 4 Pillars (사주원국 명식표) - Always visible compactly, expandable explanation -->
-                <div class="mt-3 pt-3 border-t border-white/15">
-                    <div class="grid grid-cols-4 gap-1.5 text-center">
-                        <!-- 시주 -->
-                        <div class="bg-slate-900/45 rounded-xl p-2 border border-white/10">
-                            <span class="text-[10px] text-blue-200/80 block">시주(時柱)</span>
-                            <div class="text-sm font-extrabold text-white mt-0.5 tracking-widest">庚辰</div>
-                            <div class="flex items-center justify-center gap-1 mt-1">
-                                <span class="text-[10px] px-1.5 py-0.2 rounded bg-slate-200 text-slate-800 font-bold">경금</span>
-                                <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-400 text-slate-900 font-bold">진토</span>
-                            </div>
-                        </div>
-                        <!-- 일주 (본인) -->
-                        <div class="bg-amber-400/20 rounded-xl p-2 border border-amber-300/50 relative">
-                            <span class="text-[10px] text-amber-200 font-bold block">일주(본원)</span>
-                            <div class="text-sm font-extrabold text-amber-300 mt-0.5 tracking-widest">庚辰</div>
-                            <div class="flex items-center justify-center gap-1 mt-1">
-                                <span class="text-[10px] px-1.5 py-0.2 rounded bg-slate-100 text-slate-900 font-bold">경금</span>
-                                <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-400 text-slate-900 font-bold">진토</span>
-                            </div>
-                        </div>
-                        <!-- 월주 -->
-                        <div class="bg-slate-900/45 rounded-xl p-2 border border-white/10">
-                            <span class="text-[10px] text-blue-200/80 block">월주(月柱)</span>
-                            <div class="text-sm font-extrabold text-white mt-0.5 tracking-widest">癸亥</div>
-                            <div class="flex items-center justify-center gap-1 mt-1">
-                                <span class="text-[10px] px-1.5 py-0.2 rounded bg-sky-400 text-slate-950 font-bold">계수</span>
-                                <span class="text-[10px] px-1.5 py-0.2 rounded bg-sky-500 text-white font-bold">해수</span>
-                            </div>
-                        </div>
-                        <!-- 년주 -->
-                        <div class="bg-slate-900/45 rounded-xl p-2 border border-white/10">
-                            <span class="text-[10px] text-blue-200/80 block">년주(年柱)</span>
-                            <div class="text-sm font-extrabold text-white mt-0.5 tracking-widest">戊午</div>
-                            <div class="flex items-center justify-center gap-1 mt-1">
-                                <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-400 text-slate-900 font-bold">무토</span>
-                                <span class="text-[10px] px-1.5 py-0.2 rounded bg-rose-500 text-white font-bold">오화</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Collapsible Saju Innate Trait Explanation -->
-                    <div id="wonGukDetailBox" class="hidden mt-2.5 bg-slate-900/60 rounded-xl p-3 text-xs text-blue-100 leading-relaxed border border-white/10">
-                        <div class="font-bold text-amber-300 mb-1 flex items-center gap-1">
-                            <i class="ph-fill ph-sparkle"></i>
-                            <span>타고난 사주 기질: 경진일주(庚辰日柱) · 금수상관격</span>
-                        </div>
-                        <p class="text-[11.5px] text-blue-100/90">
-                            비옥한 대지(辰土) 위에 우뚝 솟은 거대한 바위·무쇠(庚金)의 형상입니다. 결단력과 추진력이 뛰어나며, 한 번 마음먹은 일은 끝까지 해내는 괴강(魁罡)의 우두머리 기질을 지녔습니다. 겨울철(亥月)에 태어나 두뇌가 명석하고 표현력과 지혜(水)가 풍부하며, 목(木·재물)과 화(火·명예) 기운이 조화를 이룰 때 대성하는 귀격 사주입니다.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Segmented Tab Control (오늘의 운세 / 내일의 운세 / 날짜 지정) -->
-        <div class="px-5 -mt-3.5 relative z-20">
-            <div class="bg-white p-1.5 rounded-2xl shadow-md border border-slate-200/80 grid grid-cols-2 gap-1.5">
-                <button id="tabToday" onclick="switchDayTab('today')" class="py-2.5 px-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-1.5 bg-shinhan-500 text-white shadow-sm">
-                    <i class="ph-fill ph-sun text-base"></i>
-                    <span>오늘의 운세</span>
-                </button>
-                <button id="tabTomorrow" onclick="switchDayTab('tomorrow')" class="py-2.5 px-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-50">
-                    <i class="ph-fill ph-moon-stars text-base"></i>
-                    <span>내일의 운세</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- Main Scrollable Content -->
-        <main id="fortuneContent" class="flex-1 px-5 pt-4 pb-8 space-y-4 fade-enter">
-
-            <!-- Selected Date & Daily Iljin (일진) Harmony Bar -->
-            <div class="bg-white px-4 py-3 rounded-2xl border border-slate-200/80 shadow-sm flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                    <span id="dayBadge" class="px-2 py-0.5 text-[11px] font-extrabold rounded-md bg-blue-50 text-shinhan-600 border border-blue-200">오늘</span>
-                    <span id="targetDateText" class="text-sm font-bold text-slate-800">2026년 11월 11일 (수)</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <div class="text-right">
-                        <span class="text-[11px] text-slate-400 font-medium">일진:</span>
-                        <span id="iljinText" class="text-xs text-shinhan-600 font-extrabold ml-0.5">갑자(甲子)일</span>
-                    </div>
-                    <!-- Optional Date Picker Trigger -->
-                    <label class="relative cursor-pointer w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition" title="원하는 날짜 운세 미리보기">
-                        <i class="ph ph-calendar-blank text-sm"></i>
-                        <input type="date" id="customDatePicker" onchange="onCustomDatePick(event)" class="opacity-0 absolute inset-0 w-full h-full cursor-pointer">
-                    </label>
-                </div>
-            </div>
-
-            <!-- 1. Total Score & Lucky Color Section -->
-            <section class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200/80">
-                <div class="flex items-center justify-between mb-3">
-                    <h2 class="text-sm font-extrabold text-slate-800 flex items-center gap-1.5">
-                        <i class="ph-fill ph-chart-donut text-shinhan-500 text-lg"></i>
-                        <span>일진 조화 총점 및 행운의 색</span>
-                    </h2>
-                    <span id="fortuneGradeBadge" class="text-xs font-bold px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
-                        상길(上吉) · 만사형통
-                    </span>
-                </div>
-
-                <div class="grid grid-cols-12 gap-4 items-center pt-1">
-                    <!-- Score Circular Gauge -->
-                    <div class="col-span-5 flex flex-col items-center justify-center relative">
-                        <div class="relative w-28 h-28 flex items-center justify-center">
-                            <svg class="w-full h-full" viewBox="0 0 100 100">
-                                <circle cx="50" cy="50" r="42" stroke="#f1f5f9" stroke-width="9" fill="none"></circle>
-                                <circle id="scoreCircle" class="gauge-circle" cx="50" cy="50" r="42" stroke="url(#scoreGrad)" stroke-width="9" stroke-linecap="round" fill="none" stroke-dasharray="263.89" stroke-dashoffset="263.89"></circle>
-                                <defs>
-                                    <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stop-color="#0046ff" />
-                                        <stop offset="100%" stop-color="#f59e0b" />
-                                    </linearGradient>
-                                </defs>
-                            </svg>
-                            <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                <span id="scoreSubLabel" class="text-[10px] font-bold text-slate-400">오늘의 총점</span>
-                                <div class="flex items-baseline mt-0.5">
-                                    <span id="totalScoreValue" class="text-3xl font-black text-slate-900 tracking-tight">90</span>
-                                    <span class="text-xs font-bold text-slate-500 ml-0.5">점</span>
-                                </div>
-                            </div>
-                        </div>
-                        <span id="sipsinRelationTag" class="text-[11px] font-semibold text-shinhan-600 bg-shinhan-50 px-2.5 py-0.5 rounded-full mt-1">
-                            경진일주 × 편재(偏財)일
-                        </span>
-                    </div>
-
-                    <!-- Lucky Color & Sub Indicators -->
-                    <div class="col-span-7 space-y-2.5 border-l border-slate-100 pl-4">
-                        <!-- Lucky Color Highlight Box -->
-                        <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200/60">
-                            <div class="flex items-center justify-between mb-1.5">
-                                <span class="text-[11px] font-bold text-slate-500">행운의 색 (Lucky Color)</span>
-                                <span id="luckyElementBadge" class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800">목(木) 기운</span>
-                            </div>
-                            <div class="flex items-center gap-2.5">
-                                <div id="luckyColorSwatch" class="w-9 h-9 rounded-full shadow-inner border-2 border-white ring-2 ring-slate-200 shrink-0" style="background-color: #10b981;"></div>
-                                <div>
-                                    <div id="luckyColorName" class="text-sm font-extrabold text-slate-900 leading-tight">포레스트 그린</div>
-                                    <div id="luckyColorDesc" class="text-[11px] text-slate-500 leading-snug mt-0.5">재물 기운을 깨우고 결단력을 높이는 색</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Lucky Number & Direction -->
-                        <div class="grid grid-cols-2 gap-2">
-                            <div class="bg-slate-50 px-3 py-2 rounded-xl border border-slate-200/60">
-                                <span class="text-[10px] text-slate-400 font-semibold block">행운의 숫자</span>
-                                <span id="luckyNumberText" class="text-xs font-extrabold text-slate-800">3, 8</span>
-                            </div>
-                            <div class="bg-slate-50 px-3 py-2 rounded-xl border border-slate-200/60">
-                                <span class="text-[10px] text-slate-400 font-semibold block">행운의 방향</span>
-                                <span id="luckyDirectionText" class="text-xs font-extrabold text-slate-800">동남쪽</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 2. Main Shinhan-Style Comprehensive Review (오늘/내일의 총평) -->
-            <section class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200/80">
-                <div class="flex items-center justify-between mb-3">
-                    <h2 class="text-sm font-extrabold text-slate-800 flex items-center gap-1.5">
-                        <i class="ph-fill ph-scroll text-shinhan-500 text-lg"></i>
-                        <span id="reviewSectionTitle">오늘의 운세 총평</span>
-                    </h2>
-                    <span class="text-[11px] text-shinhan-600 font-semibold bg-shinhan-50 px-2 py-0.5 rounded-md">신한 정통 명리 해설</span>
-                </div>
-
-                <!-- Proverb / Key Headline Quote -->
-                <div class="bg-gradient-to-r from-shinhan-50 to-amber-50/40 border-l-4 border-shinhan-500 p-3.5 rounded-r-2xl mb-4">
-                    <p id="headlineQuote" class="text-sm font-extrabold text-shinhan-900 leading-snug">
-                        "거대한 바위가 맑은 시냇물을 만나 빛을 발하니, 막혔던 흐름이 시원하게 뚫리는 길일입니다."
-                    </p>
-                </div>
-
-                <!-- Detailed 3-Paragraph Commentary -->
-                <div id="generalReviewBody" class="space-y-3 text-[13.5px] text-slate-700 leading-relaxed tracking-normal">
-                    <!-- Dynamically populated paragraphs -->
-                </div>
-
-                <!-- Actionable Advice Pill -->
-                <div class="mt-4 pt-3.5 border-t border-slate-100 flex items-start gap-2.5">
-                    <span class="px-2 py-0.5 rounded-md bg-amber-100 text-amber-900 font-extrabold text-[11px] shrink-0 mt-0.5">핵심 처세술</span>
-                    <p id="keyAdviceText" class="text-xs font-semibold text-slate-700 leading-relaxed"></p>
-                </div>
-            </section>
-
-            <!-- 3. 1978년생 무오(戊午) 말띠 전용 맞춤 풀이 (Shinhan Life Classic Feature) -->
-            <section class="bg-hanji-100 rounded-3xl p-5 shadow-sm border border-hanji-200">
-                <div class="flex items-center justify-between mb-2.5">
-                    <div class="flex items-center gap-2">
-                        <span class="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center text-sm shadow-xs">🐴</span>
-                        <div>
-                            <h3 class="text-sm font-extrabold text-slate-900 leading-none">1978년 무오생(戊午生) 중점 풀이</h3>
-                            <span class="text-[11px] text-amber-800 font-medium">오화(午火) 년주 × 경진(庚辰) 일주 조화</span>
-                        </div>
-                    </div>
-                    <span id="luckyTimeBadge" class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-white text-amber-900 border border-amber-200 shadow-2xs">
-                        길시: 오전 9시~11시
-                    </span>
-                </div>
-                <p id="year1978SpecificText" class="text-[13px] text-slate-700 leading-relaxed bg-white/80 p-3.5 rounded-2xl border border-amber-200/60">
-                    <!-- Populated dynamically -->
-                </p>
-            </section>
-
-            <!-- 4. Category Breakdown Cards (재물, 직장/사업, 애정/가정, 건강) -->
-            <section class="space-y-2.5">
-                <h2 class="text-sm font-extrabold text-slate-800 px-1 flex items-center gap-1.5">
-                    <i class="ph-fill ph-sparkle text-shinhan-500 text-lg"></i>
-                    <span>분야별 상세 운세</span>
-                </h2>
-
-                <div class="grid grid-cols-1 gap-2.5">
-                    <!-- Wealth (재물/투자운) -->
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <div class="flex items-center gap-2">
-                                <span class="w-7 h-7 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
-                                    <i class="ph-fill ph-coins text-base"></i>
-                                </span>
-                                <span class="font-bold text-sm text-slate-800">재물 · 투자운</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <div class="w-20 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                                    <div id="wealthBar" class="h-full bg-amber-500 rounded-full transition-all duration-500" style="width: 85%"></div>
-                                </div>
-                                <span id="wealthScore" class="text-xs font-extrabold text-amber-600 w-8 text-right">85점</span>
-                            </div>
-                        </div>
-                        <p id="wealthDesc" class="text-xs text-slate-600 leading-relaxed pl-9"></p>
-                    </div>
-
-                    <!-- Career/Business (직장/비즈니스운) -->
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <div class="flex items-center gap-2">
-                                <span class="w-7 h-7 rounded-lg bg-blue-50 text-shinhan-500 flex items-center justify-center">
-                                    <i class="ph-fill ph-briefcase text-base"></i>
-                                </span>
-                                <span class="font-bold text-sm text-slate-800">직장 · 비즈니스운</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <div class="w-20 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                                    <div id="careerBar" class="h-full bg-shinhan-500 rounded-full transition-all duration-500" style="width: 90%"></div>
-                                </div>
-                                <span id="careerScore" class="text-xs font-extrabold text-shinhan-600 w-8 text-right">90점</span>
-                            </div>
-                        </div>
-                        <p id="careerDesc" class="text-xs text-slate-600 leading-relaxed pl-9"></p>
-                    </div>
-
-                    <!-- Love/Family (대인/가정운) -->
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <div class="flex items-center gap-2">
-                                <span class="w-7 h-7 rounded-lg bg-rose-50 text-rose-500 flex items-center justify-center">
-                                    <i class="ph-fill ph-users-three text-base"></i>
-                                </span>
-                                <span class="font-bold text-sm text-slate-800">대인 · 가정운</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <div class="w-20 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                                    <div id="loveBar" class="h-full bg-rose-500 rounded-full transition-all duration-500" style="width: 80%"></div>
-                                </div>
-                                <span id="loveScore" class="text-xs font-extrabold text-rose-500 w-8 text-right">80점</span>
-                            </div>
-                        </div>
-                        <p id="loveDesc" class="text-xs text-slate-600 leading-relaxed pl-9"></p>
-                    </div>
-
-                    <!-- Health (건강/컨디션운) -->
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <div class="flex items-center gap-2">
-                                <span class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                                    <i class="ph-fill ph-heartbeat text-base"></i>
-                                </span>
-                                <span class="font-bold text-sm text-slate-800">건강 · 컨디션</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <div class="w-20 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                                    <div id="healthBar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 85%"></div>
-                                </div>
-                                <span id="healthScore" class="text-xs font-extrabold text-emerald-600 w-8 text-right">85점</span>
-                            </div>
-                        </div>
-                        <p id="healthDesc" class="text-xs text-slate-600 leading-relaxed pl-9"></p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 5. Bottom Action Button -->
-            <div class="pt-2">
-                <button onclick="copyFortuneSummary()" class="w-full py-3.5 px-4 rounded-2xl bg-shinhan-900 hover:bg-shinhan-800 active:scale-[0.98] text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 transition">
-                    <i class="ph ph-copy text-lg text-amber-300"></i>
-                    <span>오늘/내일 운세 요약 복사하기</span>
-                </button>
-            </div>
-
-        </main>
-
-        <!-- Footer Info -->
-        <footer class="bg-slate-100 py-4 px-5 text-center border-t border-slate-200/60">
-            <p class="text-[11px] text-slate-500 font-medium">
-                1978년 12월 7일 오전 8시(진시)생 <span class="text-shinhan-600 font-bold">경진일주(庚辰日柱)</span> 전용 앱
-            </p>
-            <p class="text-[10px] text-slate-400 mt-0.5">
-                신한생명 정통 명리학 해설 방식을 기반으로 일진과의 오행 상생을 분석합니다.
-            </p>
-        </footer>
-
-        <!-- Custom Toast Notification -->
-        <div id="toastBox" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-slate-900/95 text-white text-xs font-medium px-4 py-2.5 rounded-full shadow-lg flex items-center gap-2 opacity-0 pointer-events-none transition-opacity duration-300">
-            <i class="ph-fill ph-check-circle text-emerald-400 text-base"></i>
-            <span id="toastMessage">클립보드에 복사되었습니다.</span>
-        </div>
-
+    <!-- 오늘 / 내일 탭 -->
+    <div class="tab-bar">
+      <button id="tab-today" class="tab-btn active" onclick="switchTab('today')">오늘의 운세</button>
+      <button id="tab-tomorrow" class="tab-btn" onclick="switchTab('tomorrow')">내일의 운세</button>
     </div>
 
-    <script>
-        // =========================================================================
-        // 1. 고정 사주 명식 (1978년 12월 7일 양력 오전 8시 00분 진시생)
-        //    년주: 戊午 (무오) | 월주: 癸亥 (계해) | 일주: 庚辰 (경진) | 시주: 庚辰 (경진)
-        // =========================================================================
-        const OWNER_SAJU = {
-            birthDate: '1978-12-07',
-            birthTime: '08:00 (진시·辰時)',
-            gender: 'male', // 기본 건명(乾命), 상단 배지 클릭으로 전환 가능
-            ilgan: '庚(경금)',
-            ilju: '庚辰(경진)'
-        };
+    <!-- 결과 렌더링 영역 -->
+    <main id="content-area">
+      <div class="card status-box">
+        <p>저장소의 <strong>fortune_data.json</strong> 데이터를 불러오는 중입니다...</p>
+      </div>
+    </main>
+  </div>
 
-        const CHEONGAN = ['갑(甲)', '을(乙)', '병(丙)', '정(丁)', '무(戊)', '기(己)', '경(庚)', '신(辛)', '임(壬)', '계(癸)'];
-        const JIJI = ['자(子)', '축(丑)', '인(寅)', '묘(卯)', '진(辰)', '사(巳)', '오(午)', '미(未)', '신(申)', '유(酉)', '술(戌)', '해(亥)'];
+  <script>
+    let fortuneJson = null;
+    let currentTab = 'today';
 
-        // 경금(庚金, index 6) 일간 기준 천간 십신(十神) 관계
-        // 갑(편재), 을(정재), 병(편관), 정(정관), 무(편인), 기(정인), 경(비견), 신(겁재), 임(식신), 계(상관)
-        const SIPSIN_BY_STEM = [
-            { name: '편재(偏財)', desc: '활동적 재물·영역 확장의 기운' }, // 갑
-            { name: '정재(正財)', desc: '안정적 결실·알찬 실속의 기운' }, // 을
-            { name: '편관(偏官)', desc: '강한 책임감·리더십 발휘의 기운' }, // 병
-            { name: '정관(正官)', desc: '명예 상승·질서와 품격의 기운' }, // 정
-            { name: '편인(偏印)', desc: '직관력·창의적 아이디어의 기운' }, // 무
-            { name: '정인(正印)', desc: '귀인의 도움·문서와 학문의 기운' }, // 기
-            { name: '비견(比肩)', desc: '주체적 추진력·뚝심과 소신의 기운' }, // 경
-            { name: '겁재(劫財)', desc: '경쟁 속 돌파·과감한 승부수의 기운' }, // 신
-            { name: '식신(食神)', desc: '풍요로운 의식주·여유와 베풂의 기운' }, // 임
-            { name: '상관(傷官)', desc: '뛰어난 언변·기존 틀을 깨는 혁신 기운' }  // 계
-        ];
+    // 한국어 색상명을 실제 컬러코드로 매핑
+    const COLOR_MAP = {
+      '빨강': '#ef4444', '적색': '#ef4444', '붉은색': '#ef4444', '홍색': '#f43f5e',
+      '파랑': '#3b82f6', '청색': '#2563eb', '푸른색': '#3b82f6', '하늘색': '#38bdf8',
+      '노랑': '#eab308', '황색': '#ca8a04', '금색': '#d97706', '주황': '#f97316',
+      '초록': '#22c55e', '녹색': '#16a34a', '연두': '#84cc16',
+      '보라': '#a855f7', '자주': '#c026d3', '분홍': '#ec4899', '핑크': '#ec4899',
+      '검정': '#1e293b', '흑색': '#0f172a', '회색': '#64748b',
+      '하양': '#f8fafc', '백색': '#ffffff', '흰색': '#ffffff', '은색': '#cbd5e1',
+      '갈색': '#92400e', '베이지': '#d6d3d1', '남색': '#1e3a8a'
+    };
 
-        // 오행 기반 행운의 색 풀 (경진일주 겨울생의 조후 및 오행 균형 고려)
-        const LUCKY_COLORS = [
-            { name: '포레스트 그린', hex: '#10b981', element: '목(木) 재성 기운', elementClass: 'bg-emerald-100 text-emerald-800', desc: '강한 금(金) 기운을 재물로 연결해 주는 실속 컬러' },
-            { name: '버건디 와인', hex: '#be123c', element: '화(火) 관성 기운', elementClass: 'bg-rose-100 text-rose-800', desc: '해월(亥月)의 한기를 녹이고 명예와 카리스마를 높이는 색' },
-            { name: '로얄 네이비', hex: '#1e3a8a', element: '수(水) 식상 기운', elementClass: 'bg-blue-100 text-blue-800', desc: '경진일주의 지혜와 설득력을 한층 빛내주는 색' },
-            { name: '앰버 골드', hex: '#f59e0b', element: '토(土) 인성 기운', elementClass: 'bg-amber-100 text-amber-900', desc: '주변의 신망과 문서운·귀인의 조력을 끌어당기는 색' },
-            { name: '코랄 테라코타', hex: '#ea580c', element: '화(火) 온기 보충', elementClass: 'bg-orange-100 text-orange-800', desc: '대인관계의 온기를 더하고 활력을 불어넣는 색' },
-            { name: '올리브 카키', hex: '#65a30d', element: '목(木) 생기 보충', elementClass: 'bg-lime-100 text-lime-800', desc: '차분한 집중력과 안정적인 자산 관리를 돕는 색' },
-            { name: '크림 화이트', hex: '#f8fafc', element: '금(金) 본원 강화', elementClass: 'bg-slate-200 text-slate-800', desc: '복잡한 사안을 명쾌하게 결단하도록 돕는 색' },
-            { name: '딥 퍼플', hex: '#7c3aed', element: '화·수 조화 기운', elementClass: 'bg-purple-100 text-purple-800', desc: '직관력과 품격 있는 리더십을 돋보이게 하는 색' }
-        ];
+    function getColorHex(colorName) {
+      if (!colorName) return '#94a3b8';
+      for (const [key, hex] of Object.entries(COLOR_MAP)) {
+        if (colorName.includes(key)) return hex;
+      }
+      return '#3b82f6';
+    }
 
-        const LUCKY_DIRECTIONS = ['동쪽 (재물방)', '남쪽 (명예방)', '동남쪽 (귀인방)', '남서쪽 (안정방)', '북동쪽 (문서방)', '서쪽 (결단방)'];
-        const LUCKY_TIMES = ['오전 07시~09시 (진시)', '오전 09시~11시 (사시)', '오전 11시~13시 (오시)', '오후 13시~15시 (미시)', '오후 15시~17시 (신시)'];
+    // 1. fortune_data.json 파일만 순수하게 불러오는 함수
+    async function fetchFortuneJson() {
+      const badge = document.getElementById('sync-badge');
+      const contentArea = document.getElementById('content-area');
+      badge.className = 'sync-badge';
+      badge.innerText = 'JSON 불러오는 중...';
 
-        // 경진일주(庚辰日柱) & 1978 무오생 맞춤형 격언/헤드라인
-        const HEADLINE_QUOTES = [
-            "비옥한 대지(辰) 위에 우뚝 선 백호(庚)가 순풍을 만나니, 결단력 있게 추진한 일에서 값진 결실을 거둡니다.",
-            "해월(亥月)의 깊은 지혜 위에 따뜻한 태양이 비추니, 그동안 구상해 온 계획이 비로소 실행의 날개를 답니다.",
-            "원석(庚金)이 알맞은 불기운을 만나 명검으로 거듭나듯, 본인의 연륜과 능력이 주변에 널리 인정받는 길일입니다.",
-            "넓은 들판을 달리는 준마(戊午) 앞에 탄탄대로가 열리니, 망설임 없는 선택이 큰 실익으로 이어집니다.",
-            "깊은 물이 소리 없이 흐르듯, 특유의 묵직한 포용력으로 주변 사람들을 아우르면 자연스레 재물과 명예가 따릅니다.",
-            "산 정상에 올라 사방을 조망하는 격이니, 복잡한 현안 속에서도 핵심을 꿰뚫어 보는 안목이 빛을 발합니다.",
-            "단단한 바위가 비바람에도 흔들리지 않듯, 중심을 지키며 원칙대로 밀고 나가면 모든 난관이 스스로 물러갑니다.",
-            "가을 들녘에 황금빛 곡식이 가득 차오르듯, 성실히 다져온 인맥과 노력이 든든한 보답으로 돌아오는 날입니다."
-        ];
-
-        // 1문단: 경진일주와 오늘/내일 일진의 전반적 기운 해설
-        const REVIEW_PARA_1 = [
-            "타고난 경진(庚辰) 일주의 강직한 금(金) 기운과 일진의 흐름이 조화롭게 맞물리는 날입니다. 평소 생각만 하고 미뤄두었던 중요한 결정이나 업무가 있다면 오늘 본인의 주도하에 추진해 보십시오. 특유의 추진력과 명쾌한 판단력이 발휘되어 막혔던 부분들이 속 시원하게 정리될 것입니다.",
-            "사주 원국의 월주 계해(癸亥)가 지닌 총명한 지혜와 수기(水氣)가 일진과 상생하며 유연한 흐름을 만들어냅니다. 강하게 밀어붙이기보다는 물 흐르듯 유연하게 상황에 대처할 때 훨씬 큰 성과를 거둘 수 있습니다. 오전 일찍 하루의 우선순위를 점검하면 일의 효율이 배가됩니다.",
-            "안정감 있는 토(土)와 금(金)의 기운이 본원을 든든히 받쳐주니 내실을 다지고 실속을 챙기기에 최적의 하루입니다. 겉으로 화려해 보이는 일보다는 실질적인 이익과 결과물이 남는 일에 에너지를 집중하십시오. 문서 점검이나 계약, 중장기 계획 수립에서 탁월한 안목이 발휘됩니다.",
-            "활기찬 생기가 사주 원국의 오화(午火) 기운을 깨우니 대외적인 활동과 소통에서 길한 기운이 강하게 작용합니다. 자리에만 머물러 있기보다 직접 현장을 챙기거나 중요한 파트너와 대화를 나누면 뜻밖의 호재나 고급 정보를 얻을 수 있습니다.",
-            "여유와 관록이 빛을 발하는 흐름입니다. 주변 상황이 다소 분주하게 돌아가더라도 78년생 무오년 특유의 큼직한 배포로 중심을 잡아주십시오. 작은 변수에 일희일비하지 않고 큰 그림을 바라보면 결과적으로 본인에게 가장 유리한 방향으로 판세가 정리됩니다."
-        ];
-
-        // 2문단: 직장·비즈니스 리더십 및 대인 처세술
-        const REVIEW_PARA_2 = [
-            "대인관계와 사회적 활동에서는 경진일주 특유의 카리스마에 부드러운 경청을 더하면 금상첨화입니다. 후배나 아랫사람, 혹은 동료의 의견을 먼저 들어주고 마지막에 명쾌한 방향을 제시해 주면 본인의 리더십과 신망이 한층 두터워집니다.",
-            "주변에 사람이 모이고 협조자가 스스로 나서는 길한 일진입니다. 혼자서 모든 책임을 짊어지기보다는 신뢰할 수 있는 사람에게 적절히 역할을 위임해 보십시오. 함께 차를 나누거나 식사를 하는 자리에서 오해는 풀리고 결속력은 더욱 단단해집니다.",
-            "언변과 설득력(금수상관의 재능)이 유난히 돋보이는 날입니다. 중요한 미팅이나 협상, 보고 자리에서 본인의 논리를 차분하게 펼치면 상대방이 흔쾌히 동의하며 따라오게 됩니다. 다만 이긴 자리일수록 상대방의 체면을 세워주는 아량이 더 큰 복을 부릅니다.",
-            "가까운 지인이나 오랜 인연으로부터 반가운 연락이나 유익한 제안이 들어올 수 있습니다. 새로운 사람을 무리하게 넓히기보다 기존에 쌓아온 소중한 인맥을 챙기는 것이 실리와 명예를 동시에 얻는 비결입니다.",
-            "원칙과 유연함의 조화가 필요한 날입니다. 본인의 기준이 명확하더라도 상대방의 입장을 한 번 더 배려해 주는 여유를 보인다면 불필요한 마찰 없이 원하는 목표에 빠르게 도달할 수 있습니다."
-        ];
-
-        // 3문단: 재물 관리 및 생활 밸런스 마무리
-        const REVIEW_PARA_3 = [
-            "재물운의 흐름은 견고하며 들어오는 기운이 우세합니다. 정당한 대가와 실익이 따르는 날이니 자산 포트폴리오를 점검하거나 계획된 지출을 집행하기에 좋습니다. 저녁 시간에는 따뜻한 온기가 있는 음식과 함께 여유로운 휴식을 취하며 에너지를 충전하십시오.",
-            "금전 거래나 지출에 있어서는 명분보다 실리를 우선시하는 것이 현명합니다. 체면치레를 위한 불필요한 소비만 줄인다면 재물이 차곡차곡 쌓이는 흐름입니다. 오늘의 행운 색상을 복장이나 소품에 가볍게 매치하면 긍정적인 기운이 더욱 강해집니다.",
-            "작은 베풂이 큰 복록으로 되돌아오는 선순환의 날입니다. 가족이나 고마운 동료에게 건네는 작은 배려가 집안과 일터의 화목을 이끌어냅니다. 늦은 오후에는 가벼운 스트레칭이나 산책으로 목과 어깨의 긴장을 풀어주시기 바랍니다.",
-            "문서운과 재물운이 함께 뒷받침되므로 꼼꼼한 확인이 곧 수익으로 직결됩니다. 하루를 마무리하며 내일의 주요 일정을 미리 메모해 두면 내일의 운세 흐름까지 한결 매끄럽게 이어질 것입니다."
-        ];
-
-        const KEY_ADVICES = [
-            "중요한 결단이나 연락은 기운이 가장 맑게 트이는 오전 시간대(09시~11시)에 진행하시면 더욱 유리합니다.",
-            "특유의 추진력에 부드러운 미소 한 번을 더하면 상대방이 스스로 마음의 문을 열고 협조해 옵니다.",
-            "겨울철(亥月) 경금 사주에는 따뜻함이 보약입니다. 따뜻한 차나 온기 있는 식사로 컨디션을 최상으로 유지하세요.",
-            "서류나 숫자를 다룰 때는 본인의 직관을 믿되, 마지막 세부 항목만 한 번 더 점검하면 완벽한 결과를 얻습니다.",
-            "가까운 가족이나 배우자에게 따뜻한 격려의 말을 건네보세요. 집안의 화목이 밖에서의 큰 성공으로 이어집니다."
-        ];
-
-        // 1978년 무오생(戊午生) 전용 특화 코멘트
-        const YEAR_1978_COMMENTS = [
-            "1978년 무오생(戊午生)에게 오늘은 년주의 오화(午火) 관성과 일주의 경진(庚辰) 기운이 조화를 이루어 사회적 위상과 존재감이 뚜렷해지는 날입니다. 연륜에서 나오는 여유로운 판단이 주변의 신뢰를 한 몸에 받게 합니다.",
-            "78년 말띠의 역동적인 에너지가 실속 있는 결과물로 이어지는 일진입니다. 벌여놓은 일들을 깔끔하게 갈무리하기에 좋으며, 오랜 경험에서 우러나온 직관이 적중하여 금전적·업무적 이득을 안겨줍니다.",
-            "무오년의 묵직한 토·화 기운이 사주의 수(水) 기운과 균형을 이루니, 마음의 평온과 실질적인 성취가 동시에 따릅니다. 급하게 속도를 내기보다 본인의 페이스를 유지하면 자연스럽게 주도권을 쥐게 됩니다.",
-            "1978년생 특유의 책임감과 의리가 빛을 발하는 날입니다. 주변에서 조언이나 결정을 구해올 때 중심을 잡아주면 명예가 높아지고, 향후 든든한 우군이 되어 돌아옵니다."
-        ];
-
-        // 분야별 상세 코멘트 풀
-        const WEALTH_COMMENTS = [
-            "재물의 뿌리가 단단해지는 날입니다. 충동적인 투자보다는 본인이 잘 아는 분야에서 안정적인 수익과 실속을 거둘 수 있습니다.",
-            "금전 회전이 원활해지고 기대했던 결실이 가시화됩니다. 계약이나 거래에서 본인에게 유리한 조건을 이끌어낼 수 있는 길일입니다.",
-            "지출과 수입의 균형이 잘 잡히는 흐름입니다. 미래 가치를 위한 합리적인 소비나 자기계발 투자는 더 큰 재물로 되돌아옵니다.",
-            "문서와 관련된 재물운이 좋습니다. 금융 상품 점검이나 자산 배분 계획을 세우기에 안성맞춤인 하루입니다."
-        ];
-
-        const CAREER_COMMENTS = [
-            "경진일주 특유의 결단력과 통솔력이 돋보입니다. 난해한 안건도 본인이 나서서 정리하면 명쾌하게 해결되며 신망이 높아집니다.",
-            "아이디어와 기획력이 빛을 발하는 날입니다. 회의나 협상 자리에서 핵심을 짚어내는 발언으로 주도권을 자연스럽게 확보합니다.",
-            "동료 및 파트너와의 호흡이 잘 맞습니다. 큰 줄기는 본인이 잡고 실무는 믿고 맡기면 업무 효율과 성과가 동시에 극대화됩니다.",
-            "그동안 성실하게 추진해 온 프로젝트나 업무에서 가시적인 호평이 따릅니다. 차분하고 당당한 태도가 행운을 배가시킵니다."
-        ];
-
-        const LOVE_COMMENTS = [
-            "가정과 대인관계에 온화한 기운이 감돕니다. 배우자나 가족과 저녁 식사를 함께하며 담소를 나누면 큰 힘과 위안을 얻습니다.",
-            "신뢰와 의리가 깊어지는 날입니다. 오랜 지인이나 친구에게 먼저 안부를 전하면 반가운 소식과 함께 뜻깊은 시간을 보낼 수 있습니다.",
-            "포용력 있는 태도가 빛을 발합니다. 사소한 이견이 있더라도 너그럽게 웃어넘기면 상대방이 오히려 고마워하며 따르게 됩니다.",
-            "대인관계에서 귀인의 기운이 강합니다. 예의 바르고 온화한 언행이 좋은 인연과 기분 좋은 화합을 불러옵니다."
-        ];
-
-        const HEALTH_COMMENTS = [
-            "전반적인 활력과 컨디션이 양호합니다. 아침 시간 가벼운 스트레칭으로 몸을 깨우면 하루 종일 상쾌한 리듬이 유지됩니다.",
-            "해월(亥月)생 경진일주는 몸을 따뜻하게 유지할수록 기운이 맑아집니다. 찬 음료보다는 따뜻한 차와 온기 있는 식사를 권장합니다.",
-            "업무 집중도가 높은 날이니 틈틈이 눈의 피로를 풀고 목·어깨 근육을 이완해 주세요. 가벼운 산책이 숙면에 큰 도움이 됩니다.",
-            "체력과 기력이 안정적인 흐름입니다. 규칙적인 식사 습관을 지키고 저녁에는 충분한 휴식으로 내일의 에너지를 비축하세요."
-        ];
-
-        // ==========================================
-        // 2. 상태 관리 및 초기 실행
-        // ==========================================
-        let currentTab = 'today'; // 'today' | 'tomorrow' | 'custom'
-        let customTargetDate = null;
-
-        window.addEventListener('DOMContentLoaded', () => {
-            renderFortune();
-        });
-
-        function toggleWonGukDetail() {
-            const box = document.getElementById('wonGukDetailBox');
-            const btnText = document.getElementById('wonGukToggleBtnText');
-            if (box.classList.contains('hidden')) {
-                box.classList.remove('hidden');
-                btnText.textContent = '명식 접기';
-            } else {
-                box.classList.add('hidden');
-                btnText.textContent = '명식 상세';
-            }
+      try {
+        const res = await fetch('./fortune_data.json?nocache=' + Date.now());
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status} - 저장소에 fortune_data.json 파일이 아직 없거나 경로가 다릅니다.`);
         }
 
-        function toggleGender() {
-            OWNER_SAJU.gender = OWNER_SAJU.gender === 'male' ? 'female' : 'male';
-            const badge = document.getElementById('genderBadge');
-            badge.textContent = OWNER_SAJU.gender === 'male' ? '건명(乾命)' : '곤명(坤命)';
-            renderFortune();
-            showToast(`사주 성별 기준이 ${badge.textContent}으로 전환되었습니다.`);
-        }
+        fortuneJson = await res.json();
+        renderDayFortune(currentTab);
+      } catch (err) {
+        badge.className = 'sync-badge err';
+        badge.innerText = '연동 오류';
+        contentArea.innerHTML = `
+          <div class="card status-box">
+            <h3>fortune_data.json 파일을 불러오지 못했습니다</h3>
+            <p>${err.message}</p>
+            <div class="raw-pre" style="text-align:left;">
+1. GitHub 저장소의 [Code] 탭에 fortune_data.json 파일이 index.html과 같은 위치에 있는지 확인해 주세요.
+2. 휴대폰에 다운받은 로컬 파일이 아니라 GitHub Pages 주소(https://아이디.github.io/저장소이름/)로 접속해야 JSON 파일을 읽어올 수 있습니다.
+            </div>
+          </div>
+        `;
+      }
+    }
 
-        // ==========================================
-        // 3. 결정론적 시드 해시 및 일진(60갑자) 계산
-        // ==========================================
-        function createSeededRandom(seedStr) {
-            let h = 2166136261 >>> 0;
-            for (let i = 0; i < seedStr.length; i++) {
-                h ^= seedStr.charCodeAt(i);
-                h = Math.imul(h, 16777619);
-            }
-            return function() {
-                h += h << 13; h ^= h >>> 7;
-                h += h << 3;  h ^= h >>> 17;
-                h += h << 5;
-                return (h >>> 0) / 4294967296;
-            };
-        }
+    // 2. 탭 전환 (오늘 / 내일)
+    function switchTab(tab) {
+      currentTab = tab;
+      document.getElementById('tab-today').classList.toggle('active', tab === 'today');
+      document.getElementById('tab-tomorrow').classList.toggle('active', tab === 'tomorrow');
+      if (fortuneJson) {
+        renderDayFortune(tab);
+      }
+    }
 
-        // 특정 날짜의 일진(60갑자) 및 천간 인덱스 계산
-        function getDayGanjiInfo(dateObj) {
-            // 기준일: 2000년 1월 1일 = 무오(戊午)일 (60갑자 중 index 54)
-            const baseDate = new Date(2000, 0, 1);
-            const target = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
-            const diffDays = Math.round((target - baseDate) / (1000 * 60 * 60 * 24));
-            let cycleIdx = (54 + diffDays) % 60;
-            if (cycleIdx < 0) cycleIdx += 60;
-            const stemIdx = cycleIdx % 10;
-            const branchIdx = cycleIdx % 12;
-            const cheongan = CHEONGAN[stemIdx];
-            const jiji = JIJI[branchIdx];
-            return {
-                label: `${cheongan[0]}${jiji[0]}(${cheongan[2]}${jiji[2]})일`,
-                stemIdx,
-                branchIdx
-            };
-        }
+    // 3. 실제 JSON 데이터만 화면에 렌더링 (가짜 문구 일체 없음)
+    function renderDayFortune(tab) {
+      const badge = document.getElementById('sync-badge');
+      const contentArea = document.getElementById('content-area');
+      const dayData = tab === 'tomorrow' ? fortuneJson.tomorrow : fortuneJson.today;
+      const updatedAt = fortuneJson.updatedAtKST || '시간 정보 없음';
 
-        function formatKoreanDate(dateObj) {
-            const days = ['일', '월', '화', '수', '목', '금', '토'];
-            const y = dateObj.getFullYear();
-            const m = dateObj.getMonth() + 1;
-            const d = dateObj.getDate();
-            const w = days[dateObj.getDay()];
-            return `${y}년 ${m}월 ${d}일 (${w})`;
-        }
+      if (!dayData) {
+        badge.className = 'sync-badge err';
+        badge.innerText = '데이터 비어있음';
+        contentArea.innerHTML = `
+          <div class="card status-box">
+            <h3>${tab === 'today' ? '오늘' : '내일'} 운세 데이터가 JSON 안에 없습니다</h3>
+            <p>fortune_data.json 원본 내용을 아래에서 확인해 주세요.</p>
+            <pre class="raw-pre">${JSON.stringify(fortuneJson, null, 2)}</pre>
+          </div>
+        `;
+        return;
+      }
 
-        // ==========================================
-        // 4. 탭 전환 및 운세 렌더링
-        // ==========================================
-        function switchDayTab(tab) {
-            currentTab = tab;
-            customTargetDate = null;
+      // 파이썬 크롤러가 에러를 기록했거나 본문이 비어있는 경우 진단 화면 표시
+      const hasParagraphs = Array.isArray(dayData.paragraphs) && dayData.paragraphs.length > 0;
+      const hasRawText = Boolean(dayData.rawText && dayData.rawText.trim().length > 0);
 
-            const tabToday = document.getElementById('tabToday');
-            const tabTomorrow = document.getElementById('tabTomorrow');
+      if (dayData.status === 'error' || (!hasParagraphs && !hasRawText)) {
+        badge.className = 'sync-badge err';
+        badge.innerText = '신한라이프 본문 미추출';
+        contentArea.innerHTML = `
+          <div class="card status-box">
+            <h3>fortune_data.json은 연결되었으나 운세 본문이 비어 있습니다</h3>
+            <p>파이썬(fetch_fortune.py)이 신한라이프 페이지에서 운세 텍스트를 찾지 못했습니다.</p>
+            <div class="raw-pre" style="text-align:left;">${JSON.stringify(dayData, null, 2)}</div>
+          </div>
+        `;
+        return;
+      }
 
-            if (tab === 'today') {
-                tabToday.className = "py-2.5 px-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-1.5 bg-shinhan-500 text-white shadow-sm";
-                tabTomorrow.className = "py-2.5 px-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-50";
-            } else {
-                tabTomorrow.className = "py-2.5 px-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-1.5 bg-shinhan-500 text-white shadow-sm";
-                tabToday.className = "py-2.5 px-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-50";
-            }
+      // 정상 추출된 경우
+      badge.className = 'sync-badge ok';
+      badge.innerText = '✓ fortune_data.json 실데이터 연동됨';
 
-            triggerContentFade();
-            renderFortune();
-        }
+      const scoreText = dayData.score ? `${dayData.score}점` : '원문 참조';
+      const colorText = dayData.luckyColor ? dayData.luckyColor : '원문 참조';
+      const colorHex = getColorHex(dayData.luckyColor);
 
-        function onCustomDatePick(e) {
-            const val = e.target.value;
-            if (!val) return;
-            const [y, m, d] = val.split('-').map(Number);
-            customTargetDate = new Date(y, m - 1, d);
-            currentTab = 'custom';
+      const paragraphsHtml = hasParagraphs
+        ? dayData.paragraphs.map(p => `<div class="fortune-paragraph">${escapeHtml(p)}</div>`).join('')
+        : `<div class="fortune-paragraph">${escapeHtml(dayData.rawText)}</div>`;
 
-            // Reset active tab highlight when custom date is chosen
-            document.getElementById('tabToday').className = "py-2.5 px-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-50";
-            document.getElementById('tabTomorrow').className = "py-2.5 px-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-50";
+      contentArea.innerHTML = `
+        <div class="card">
+          <div class="date-header">
+            <span class="date-label">${tab === 'today' ? '오늘의 운세' : '내일의 운세'} (${dayData.date || '-'})</span>
+            <span class="updated-time">수집: ${updatedAt}</span>
+          </div>
 
-            triggerContentFade();
-            renderFortune();
-            showToast(`${formatKoreanDate(customTargetDate)} 운세를 불러왔습니다.`);
-        }
+          <div class="summary-grid">
+            <div class="metric-box">
+              <div class="metric-label">운세 총점</div>
+              <div class="metric-value">${escapeHtml(String(scoreText))}</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-label">행운의 색</div>
+              <div class="metric-value">
+                ${dayData.luckyColor ? `<span class="color-dot" style="background:${colorHex};"></span>` : ''}
+                <span>${escapeHtml(String(colorText))}</span>
+              </div>
+            </div>
+          </div>
 
-        function triggerContentFade() {
-            const content = document.getElementById('fortuneContent');
-            content.classList.remove('fade-enter');
-            void content.offsetWidth;
-            content.classList.add('fade-enter');
-        }
+          <div class="section-title">📜 신한라이프 추출 총평 및 상세 풀이</div>
+          ${paragraphsHtml}
 
-        function renderFortune() {
-            const now = new Date();
-            let targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+          <details class="raw-viewer">
+            <summary>수집된 신한라이프 원본 텍스트(rawText) 전체 보기</summary>
+            <pre class="raw-pre">${escapeHtml(dayData.rawText || JSON.stringify(dayData, null, 2))}</pre>
+          </details>
+        </div>
 
-            if (currentTab === 'tomorrow') {
-                targetDate.setDate(targetDate.getDate() + 1);
-            } else if (currentTab === 'custom' && customTargetDate) {
-                targetDate = new Date(customTargetDate);
-            }
+        <a class="direct-link-btn" href="https://www.shinhanlife.co.kr/hp/cdhg0130.do" target="_blank" rel="noopener">
+          신한라이프 공식 운세 페이지에서 직접 대조하기 ↗
+        </a>
+      `;
+    }
 
-            const dateKey = `${targetDate.getFullYear()}-${String(targetDate.getMonth() + 1).padStart(2, '0')}-${String(targetDate.getDate()).padStart(2, '0')}`;
-            document.getElementById('customDatePicker').value = dateKey;
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
 
-            // 고유 시드: 1978-12-07 08:00 경진일주 + 조회 날짜
-            const seedKey = `1978-12-07_08:00_GyeongJin_${OWNER_SAJU.gender}_${dateKey}`;
-            const rng = createSeededRandom(seedKey);
-
-            // 상단 날짜 배지 및 섹션 타이틀
-            const dayBadge = document.getElementById('dayBadge');
-            const scoreSubLabel = document.getElementById('scoreSubLabel');
-            if (currentTab === 'today') {
-                dayBadge.textContent = '오늘';
-                dayBadge.className = 'px-2 py-0.5 text-[11px] font-extrabold rounded-md bg-blue-50 text-shinhan-600 border border-blue-200';
-                document.getElementById('reviewSectionTitle').textContent = '오늘의 운세 총평';
-                scoreSubLabel.textContent = '오늘의 총점';
-            } else if (currentTab === 'tomorrow') {
-                dayBadge.textContent = '내일';
-                dayBadge.className = 'px-2 py-0.5 text-[11px] font-extrabold rounded-md bg-amber-50 text-amber-700 border border-amber-200';
-                document.getElementById('reviewSectionTitle').textContent = '내일의 운세 총평';
-                scoreSubLabel.textContent = '내일의 총점';
-            } else {
-                dayBadge.textContent = '지정일';
-                dayBadge.className = 'px-2 py-0.5 text-[11px] font-extrabold rounded-md bg-purple-50 text-purple-700 border border-purple-200';
-                document.getElementById('reviewSectionTitle').textContent = '지정일 운세 총평';
-                scoreSubLabel.textContent = '지정일 총점';
-            }
-
-            // 일진 및 경진일주와의 십신(十神) 관계 표시
-            const ganjiInfo = getDayGanjiInfo(targetDate);
-            document.getElementById('targetDateText').textContent = formatKoreanDate(targetDate);
-            document.getElementById('iljinText').textContent = ganjiInfo.label;
-
-            const sipsin = SIPSIN_BY_STEM[ganjiInfo.stemIdx];
-            document.getElementById('sipsinRelationTag').textContent = `경진일주 × ${sipsin.name}일`;
-
-            // 세부 점수 산출 (74 ~ 98점 사이)
-            const wealthScore = Math.floor(74 + rng() * 25);
-            const careerScore = Math.floor(76 + rng() * 23);
-            const loveScore   = Math.floor(74 + rng() * 25);
-            const healthScore = Math.floor(75 + rng() * 24);
-            const totalScore  = Math.round((wealthScore + careerScore + loveScore + healthScore) / 4);
-
-            // 총점 원형 게이지 애니메이션
-            document.getElementById('totalScoreValue').textContent = totalScore;
-            const circumference = 2 * Math.PI * 42;
-            const offset = circumference - (totalScore / 100) * circumference;
-            document.getElementById('scoreCircle').style.strokeDashoffset = offset;
-
-            const gradeBadge = document.getElementById('fortuneGradeBadge');
-            if (totalScore >= 90) {
-                gradeBadge.textContent = '대길(大吉) · 만사형통';
-                gradeBadge.className = 'text-xs font-bold px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200';
-            } else if (totalScore >= 84) {
-                gradeBadge.textContent = '상길(上吉) · 순풍항해';
-                gradeBadge.className = 'text-xs font-bold px-2.5 py-1 rounded-full bg-blue-50 text-shinhan-600 border border-blue-200';
-            } else if (totalScore >= 78) {
-                gradeBadge.textContent = '중길(中吉) · 안정발전';
-                gradeBadge.className = 'text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200';
-            } else {
-                gradeBadge.textContent = '평길(平吉) · 내실충실';
-                gradeBadge.className = 'text-xs font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200';
-            }
-
-            // 행운의 색, 오행 배지, 숫자, 방향
-            const colorObj = LUCKY_COLORS[Math.floor(rng() * LUCKY_COLORS.length)];
-            document.getElementById('luckyColorSwatch').style.backgroundColor = colorObj.hex;
-            document.getElementById('luckyColorName').textContent = colorObj.name;
-            document.getElementById('luckyColorDesc').textContent = colorObj.desc;
-            const elBadge = document.getElementById('luckyElementBadge');
-            elBadge.textContent = colorObj.element;
-            elBadge.className = `text-[10px] font-bold px-1.5 py-0.5 rounded ${colorObj.elementClass}`;
-
-            const num1 = Math.floor(1 + rng() * 5);
-            const num2 = Math.floor(6 + rng() * 4);
-            document.getElementById('luckyNumberText').textContent = `${num1}, ${num2}`;
-
-            const dir = LUCKY_DIRECTIONS[Math.floor(rng() * LUCKY_DIRECTIONS.length)];
-            document.getElementById('luckyDirectionText').textContent = dir;
-
-            // 총평 텍스트 렌더링
-            const quote = HEADLINE_QUOTES[Math.floor(rng() * HEADLINE_QUOTES.length)];
-            const p1 = REVIEW_PARA_1[Math.floor(rng() * REVIEW_PARA_1.length)];
-            const p2 = REVIEW_PARA_2[Math.floor(rng() * REVIEW_PARA_2.length)];
-            const p3 = REVIEW_PARA_3[Math.floor(rng() * REVIEW_PARA_3.length)];
-            const advice = KEY_ADVICES[Math.floor(rng() * KEY_ADVICES.length)];
-
-            document.getElementById('headlineQuote').textContent = `"${quote}"`;
-            document.getElementById('generalReviewBody').innerHTML = `
-                <p>${p1}</p>
-                <p>${p2}</p>
-                <p>${p3}</p>
-            `;
-            document.getElementById('keyAdviceText').textContent = advice;
-
-            // 1978년 무오생 특화 박스
-            const luckyTime = LUCKY_TIMES[Math.floor(rng() * LUCKY_TIMES.length)];
-            document.getElementById('luckyTimeBadge').textContent = `길시: ${luckyTime}`;
-            document.getElementById('year1978SpecificText').textContent = YEAR_1978_COMMENTS[Math.floor(rng() * YEAR_1978_COMMENTS.length)];
-
-            // 분야별 상세 운세
-            document.getElementById('wealthScore').textContent = `${wealthScore}점`;
-            document.getElementById('wealthBar').style.width = `${wealthScore}%`;
-            document.getElementById('wealthDesc').textContent = WEALTH_COMMENTS[Math.floor(rng() * WEALTH_COMMENTS.length)];
-
-            document.getElementById('careerScore').textContent = `${careerScore}점`;
-            document.getElementById('careerBar').style.width = `${careerScore}%`;
-            document.getElementById('careerDesc').textContent = CAREER_COMMENTS[Math.floor(rng() * CAREER_COMMENTS.length)];
-
-            document.getElementById('loveScore').textContent = `${loveScore}점`;
-            document.getElementById('loveBar').style.width = `${loveScore}%`;
-            document.getElementById('loveDesc').textContent = LOVE_COMMENTS[Math.floor(rng() * LOVE_COMMENTS.length)];
-
-            document.getElementById('healthScore').textContent = `${healthScore}점`;
-            document.getElementById('healthBar').style.width = `${healthScore}%`;
-            document.getElementById('healthDesc').textContent = HEALTH_COMMENTS[Math.floor(rng() * HEALTH_COMMENTS.length)];
-        }
-
-        // ==========================================
-        // 5. 클립보드 복사 및 토스트 알림
-        // ==========================================
-        function copyFortuneSummary() {
-            const dayLabel = currentTab === 'today' ? '오늘의 운세' : (currentTab === 'tomorrow' ? '내일의 운세' : '지정일 운세');
-            const dateStr = document.getElementById('targetDateText').textContent;
-            const iljinStr = document.getElementById('iljinText').textContent;
-            const scoreStr = document.getElementById('totalScoreValue').textContent;
-            const colorStr = document.getElementById('luckyColorName').textContent;
-            const quoteStr = document.getElementById('headlineQuote').textContent;
-            const adviceStr = document.getElementById('keyAdviceText').textContent;
-
-            const summaryText = `[1978년 12월 7일 진시생 (경진일주) 전용 - ${dayLabel}]\n` +
-                `• 일자: ${dateStr} (${iljinStr})\n` +
-                `• 운세 총점: ${scoreStr}점\n` +
-                `• 행운의 색: ${colorStr}\n` +
-                `• 총평 요약: ${quoteStr}\n` +
-                `• 핵심 처세술: ${adviceStr}`;
-
-            const tempArea = document.createElement('textarea');
-            tempArea.value = summaryText;
-            document.body.appendChild(tempArea);
-            tempArea.select();
-            try {
-                document.execCommand('copy');
-                showToast('운세 요약이 클립보드에 복사되었습니다!');
-            } catch (err) {
-                showToast('복사에 실패했습니다.');
-            }
-            document.body.removeChild(tempArea);
-        }
-
-        let toastTimer = null;
-        function showToast(msg) {
-            const box = document.getElementById('toastBox');
-            document.getElementById('toastMessage').textContent = msg;
-            box.classList.remove('opacity-0');
-            box.classList.add('opacity-100');
-
-            if (toastTimer) clearTimeout(toastTimer);
-            toastTimer = setTimeout(() => {
-                box.classList.remove('opacity-100');
-                box.classList.add('opacity-0');
-            }, 2600);
-        }
-    </script>
+    window.addEventListener('DOMContentLoaded', fetchFortuneJson);
+  </script>
 </body>
 </html>
