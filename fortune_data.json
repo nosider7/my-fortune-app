@@ -1,14 +1,62 @@
 {
-  "updatedAtKST": "2026-11-11 22:30:38",
+  "updatedAtKST": "2026-11-11 22:37:37",
   "birthProfile": "1978-12-07 08:00 (양력/진시)",
   "today": {
     "date": "2026-11-11",
-    "status": "error",
-    "message": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"button:has-text('운세'), a:has-text('운세'), input[type='submit'], .btn_submit, .btn_search\").first\n    - locator resolved to <a href=\"#\" data-menu-nm=\"운세/사주\" data-menu-id=\"cdhg0130\" data-wcms-id=\"cdhg0130\" data-href=\"/hp/cdhg0130.do\">…</a>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is not visible\n    - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled and stable\n      - element is not visible\n    - retrying click action\n      - waiting 100ms\n    58 × waiting for element to be visible, enabled and stable\n       - element is not visible\n     - retrying click action\n       - waiting 500ms\n"
+    "status": "success",
+    "score": null,
+    "luckyColor": null,
+    "paragraphs": [
+      "보험계약조회보험계약조회변액보험계약조회보험거래내역금리연동형공시실연금저축보험공시실해피콜결과조회",
+      "보험계약변경펀드변경/자동재배분펀드변경/자동재배분내역감액/특약해지(해약)연금정보변경보험계약변경내역갱신변경청약철회신청/취소",
+      "지급금신청분할보험금신청배당금신청만기보험금신청해약환급금신청휴면보험금신청중도인출신청신청결과확인",
+      "보험료납입보험료납입자유/추가납입자유/추가납입 정기이체달러보험 원화고정납입금액변경납입신청결과확인할인 및 납입유연제도신청내역 확인",
+      "대출보험계약대출현황보험계약대출신청보험계약대출신청내역보험계약대출상환/이자납입보험계약대출분할상환개인대출 통지서 조회",
+      "고객정보관리내 정보관리My Tops Club마케팅동의/철회자동이체 등록/변경내 계약관리안내장발송내역조회",
+      "증명서발급보험료 납입증명서대출증명서사고보험금 지급내역서증권재발행해약환급금증명서",
+      "고객지원/보안신한라이프/보안카드공동인증서관리타기관OTP관리이용가이드설치프로그램 안내"
+    ],
+    "rawText": "본문 바로가기\n주메뉴 바로가기\n신한라이프\n로그인 공시실 회사소개 디지털보험\n사이버창구\n보험상품\n금융상품\n퇴직연금\n혜택\n헬프데스크\n소비자포털\n큰글씨\n화면 확대축소\n펼치기\nSNS 공유하기\n펼치기\n운세/사주\n상단으로 이동\n앱설치\n챗봇\n보험에 대해 궁금한가요?\n챗봇에게 물어보세요~!\n개인정보 보호\n관련메뉴\n펼치기\n\t\n약관/정책\n관련메뉴\n펼치기\n\t\n조회/안내\n관련메뉴\n펼치기\n\t\n신고센터\n관련메뉴\n펼치기\n유투브 바로가기\n인스타그램 바로가기\n카카오톡 바로가기\n개인정보처리방침 신용정보활용체제 마케팅동의 가입설계동의 전자민원접수 보호금융상품등록부\n신한라이프 온(On) 콜센터 1588-5580 (해외 82-2-2131-3000)\n주소\n04542 서울특별시 중구 삼일대로 358(을지로2가) 신한라이프생명보험 주식회사 대표이사 천상영 사업자등록번호 104-81-28992\nⓒ 2021 Shinhan Life Insurance Co., Ltd.\n\t\n신한금융그룹\n관련 사이트 펼치기",
+    "debugInfo": {
+      "frameUrl": "https://www.shinhanlife.co.kr/hp/cdhg0140.do",
+      "allFrames": [
+        "https://www.shinhanlife.co.kr/hp/cdhg0140.do",
+        "about:blank"
+      ],
+      "formAction": {
+        "clicked": null,
+        "selectCount": 0,
+        "selectInfo": []
+      }
+    }
   },
   "tomorrow": {
     "date": "2026-11-12",
-    "status": "error",
-    "message": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"button:has-text('운세'), a:has-text('운세'), input[type='submit'], .btn_submit, .btn_search\").first\n    - locator resolved to <a href=\"#\" data-menu-nm=\"운세/사주\" data-menu-id=\"cdhg0130\" data-wcms-id=\"cdhg0130\" data-href=\"/hp/cdhg0130.do\">…</a>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is not visible\n    - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled and stable\n      - element is not visible\n    - retrying click action\n      - waiting 100ms\n    58 × waiting for element to be visible, enabled and stable\n       - element is not visible\n     - retrying click action\n       - waiting 500ms\n"
+    "status": "success",
+    "score": null,
+    "luckyColor": null,
+    "paragraphs": [
+      "보험계약조회보험계약조회변액보험계약조회보험거래내역금리연동형공시실연금저축보험공시실해피콜결과조회",
+      "보험계약변경펀드변경/자동재배분펀드변경/자동재배분내역감액/특약해지(해약)연금정보변경보험계약변경내역갱신변경청약철회신청/취소",
+      "지급금신청분할보험금신청배당금신청만기보험금신청해약환급금신청휴면보험금신청중도인출신청신청결과확인",
+      "보험료납입보험료납입자유/추가납입자유/추가납입 정기이체달러보험 원화고정납입금액변경납입신청결과확인할인 및 납입유연제도신청내역 확인",
+      "대출보험계약대출현황보험계약대출신청보험계약대출신청내역보험계약대출상환/이자납입보험계약대출분할상환개인대출 통지서 조회",
+      "고객정보관리내 정보관리My Tops Club마케팅동의/철회자동이체 등록/변경내 계약관리안내장발송내역조회",
+      "증명서발급보험료 납입증명서대출증명서사고보험금 지급내역서증권재발행해약환급금증명서",
+      "고객지원/보안신한라이프/보안카드공동인증서관리타기관OTP관리이용가이드설치프로그램 안내"
+    ],
+    "rawText": "본문 바로가기\n주메뉴 바로가기\n신한라이프\n로그인 공시실 회사소개 디지털보험\n사이버창구\n보험상품\n금융상품\n퇴직연금\n혜택\n헬프데스크\n소비자포털\n큰글씨\n화면 확대축소\n펼치기\nSNS 공유하기\n펼치기\n운세/사주\n상단으로 이동\n앱설치\n챗봇\n보험에 대해 궁금한가요?\n챗봇에게 물어보세요~!\n개인정보 보호\n관련메뉴\n펼치기\n\t\n약관/정책\n관련메뉴\n펼치기\n\t\n조회/안내\n관련메뉴\n펼치기\n\t\n신고센터\n관련메뉴\n펼치기\n유투브 바로가기\n인스타그램 바로가기\n카카오톡 바로가기\n개인정보처리방침 신용정보활용체제 마케팅동의 가입설계동의 전자민원접수 보호금융상품등록부\n신한라이프 온(On) 콜센터 1588-5580 (해외 82-2-2131-3000)\n주소\n04542 서울특별시 중구 삼일대로 358(을지로2가) 신한라이프생명보험 주식회사 대표이사 천상영 사업자등록번호 104-81-28992\nⓒ 2021 Shinhan Life Insurance Co., Ltd.\n\t\n신한금융그룹\n관련 사이트 펼치기",
+    "debugInfo": {
+      "frameUrl": "https://www.shinhanlife.co.kr/hp/cdhg0140.do",
+      "allFrames": [
+        "https://www.shinhanlife.co.kr/hp/cdhg0140.do",
+        "about:blank"
+      ],
+      "formAction": {
+        "clicked": null,
+        "selectCount": 0,
+        "selectInfo": []
+      }
+    }
   }
 }
