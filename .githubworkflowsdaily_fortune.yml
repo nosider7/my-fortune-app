@@ -1,1 +1,39 @@
+name: Daily Shinhan Fortune Updater
 
+on:
+  schedule:
+    # UTC 15:05 = 한국 시간(KST) 매일 밤 00:05
+    - cron: '5 15 * * *'
+  workflow_dispatch: # GitHub 웹 화면에서 즉시 수동 실행할 수 있는 버튼 활성화
+
+permissions:
+  contents: write # 추출한 JSON 파일을 저장소에 덮어쓰기(Commit)하기 위한 권한
+
+jobs:
+  update-fortune:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. 저장소 코드 불러오기
+        uses: actions/checkout@v4
+
+      - name: 2. 파이썬 3.11 설치
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 3. Playwright 및 브라우저 설치
+        run: |
+          pip install playwright
+          playwright install --with-deps chromium
+
+      - name: 4. 신한라이프 운세 데이터 추출 실행
+        run: python fetch_fortune.py
+
+      - name: 5. 추출된 fortune_data.json 자동 저장 및 배포
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add fortune_data.json
+          git diff --staged --quiet || git commit -m "Auto-update daily fortune: $(TZ='Asia/Seoul' date +'%Y-%m-%d')"
+          git push
