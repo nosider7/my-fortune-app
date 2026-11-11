@@ -25,7 +25,7 @@ async def scrape_single_day(page, target_date: datetime):
 
     try:
         # 신한라이프 오늘의 운세 페이지 접속
-        await page.goto("https://www.shinhanlife.co.kr/hp/cdhg0130.do", wait_until="networkidle", timeout=45000)
+        await page.goto("https://www.shinhanlife.co.kr/hp/cdhg0140.do", wait_until="networkidle", timeout=45000)
         await page.wait_for_timeout(2000)
 
         # 운세 컨텐츠 프레임 탐색 (내부 iframe이 있을 경우 전환)
