@@ -1,0 +1,14 @@
+{
+  "updatedAtKST": "2026-11-11 21:52:25",
+  "birthProfile": "1978-12-07 08:00 (양력/진시)",
+  "today": {
+    "date": "2026-11-11",
+    "status": "error",
+    "message": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"button:has-text('운세'), a:has-text('운세'), input[type='submit'], .btn_submit, .btn_search\").first\n    - locator resolved to <a href=\"#\" data-menu-nm=\"운세/사주\" data-menu-id=\"cdhg0130\" data-wcms-id=\"cdhg0130\" data-href=\"/hp/cdhg0130.do\">…</a>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is not visible\n    - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled and stable\n      - element is not visible\n    - retrying click action\n      - waiting 100ms\n    58 × waiting for element to be visible, enabled and stable\n       - element is not visible\n     - retrying click action\n       - waiting 500ms\n"
+  },
+  "tomorrow": {
+    "date": "2026-11-12",
+    "status": "error",
+    "message": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"button:has-text('운세'), a:has-text('운세'), input[type='submit'], .btn_submit, .btn_search\").first\n    - locator resolved to <a href=\"#\" data-menu-nm=\"운세/사주\" data-menu-id=\"cdhg0130\" data-wcms-id=\"cdhg0130\" data-href=\"/hp/cdhg0130.do\">…</a>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is not visible\n    - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled and stable\n      - element is not visible\n    - retrying click action\n      - waiting 100ms\n    58 × waiting for element to be visible, enabled and stable\n       - element is not visible\n     - retrying click action\n       - waiting 500ms\n"
+  }
+}
