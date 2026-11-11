@@ -35,6 +35,66 @@
                 }
             }
         }
+// ===== [추가] GitHub Actions가 생성한 fortune_data.json 실시간 연동 =====
+let shinhanRealData = null;
+
+async function syncWithShinhanJson(targetType = 'today') {
+  try {
+    // 캐시 방지를 위해 현재 시간 파라미터 추가
+    const res = await fetch('./fortune_data.json?t=' + Date.now());
+    if (!res.ok) throw new Error('JSON 파일을 찾을 수 없습니다.');
+    
+    shinhanRealData = await res.json();
+    const dayData = targetType === 'tomorrow' ? shinhanRealData.tomorrow : shinhanRealData.today;
+
+    if (dayData && dayData.status === 'success' && (dayData.paragraphs?.length > 0 || dayData.rawText)) {
+      // 1. 총점 반영 (추출된 점수가 있을 경우)
+      if (dayData.score) {
+        const scoreEl = document.querySelector('#score-value, .score-num, [data-role="score"]');
+        if (scoreEl) scoreEl.innerText = dayData.score;
+      }
+
+      // 2. 행운의 색 반영
+      if (dayData.luckyColor) {
+        const colorEl = document.querySelector('#lucky-color-name, .lucky-color, [data-role="lucky-color"]');
+        if (colorEl) colorEl.innerText = dayData.luckyColor;
+      }
+
+      // 3. 총평 본문 교체 (신한라이프 원문 그대로 출력)
+      const summaryContainer = document.querySelector('#fortune-summary, .fortune-content, #total-review, main');
+      const bodyHtml = (dayData.paragraphs && dayData.paragraphs.length > 0)
+        ? dayData.paragraphs.map(p => `<p style="margin-bottom:12px; line-height:1.7;">${p}</p>`).join('')
+        : `<pre style="white-space:pre-wrap; font-family:inherit; line-height:1.6;">${dayData.rawText}</pre>`;
+
+      // 화면 상단에 연동 완료 배지 및 원문 출력 박스 삽입
+      let realBox = document.getElementById('shinhan-real-box');
+      if (!realBox) {
+        realBox = document.createElement('div');
+        realBox.id = 'shinhan-real-box';
+        realBox.style.cssText = 'background:#fffdf9; border:2px solid #2563eb; border-radius:16px; padding:18px; margin:16px 0; box-shadow:0 4px 12px rgba(37,99,235,0.08);';
+        document.body.prepend(realBox);
+      }
+
+      realBox.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">
+          <span style="background:#2563eb; color:#fff; font-size:12px; font-weight:700; padding:4px 10px; border-radius:20px;">
+            ✓ 신한라이프 원문 연동됨 (${dayData.date})
+          </span>
+          <span style="font-size:11px; color:#64748b;">업데이트: ${shinhanRealData.updatedAtKST}</span>
+        </div>
+        ${dayData.score ? `<div style="font-size:18px; font-weight:800; color:#1e293b; margin-bottom:8px;">오늘의 총점: <span style="color:#2563eb;">${dayData.score}점</span> ${dayData.luckyColor ? `| 행운의 색: ${dayData.luckyColor}` : ''}</div>` : ''}
+        <div style="font-size:14.5px; color:#334155;">${bodyHtml}</div>
+      `;
+    } else {
+      console.warn('fortune_data.json 안에 유효한 신한라이프 운세 본문이 없습니다:', dayData);
+    }
+  } catch (err) {
+    console.warn('JSON 로드 실패 (기본 내장 운세가 표시됩니다):', err);
+  }
+}
+
+// 페이지 로드 시 자동 실행
+window.addEventListener('DOMContentLoaded', () => syncWithShinhanJson('today'));
     </script>
     <style>
         body {
