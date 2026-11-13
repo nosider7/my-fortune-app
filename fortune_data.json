@@ -1,14 +1,1021 @@
 {
-  "updatedAtKST": "2026-11-13 01:00:14",
+  "updatedAtKST": "2026-11-14 00:50:52",
   "birthProfile": "1978-12-07 08:00 (양력/진시)",
   "today": {
-    "date": "2026-11-13",
-    "status": "error",
-    "message": "Page.goto: Timeout 45000ms exceeded.\nCall log:\n  - navigating to \"https://www.shinhanlife.co.kr/hp/cdhg0130.do\", waiting until \"networkidle\"\n"
+    "date": "2026-11-14",
+    "status": "success",
+    "score": null,
+    "luckyColor": null,
+    "paragraphs": [],
+    "rawText": "본문 바로가기\n\t\t주메뉴 바로가기\n\t\n\t\n\t\n\t\n\t\t\n\t\t\n\t\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\t\t\t운세/사주\n\t\t\n\t\n\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\n\t\n\n\n\t\t\n\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t상단으로 이동\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t앱설치\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t챗봇 보험에 대해 궁금한가요? 챗봇에게 물어보세요~!\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t카카오\n\t\t\t\t\t\t\tURL 복사\n\t\t\t\t\t\t\t더보기\n\t\t\t\n\t\t\t\t\t\t\t닫기",
+    "debugInfo": {
+      "frameUrl": "https://www.shinhanlife.co.kr/hp/cdhg0140.do",
+      "allFrames": [
+        "https://www.shinhanlife.co.kr/hp/cdhg0140.do",
+        "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A106"
+      ],
+      "pageScan": {
+        "currentUrl": "https://www.shinhanlife.co.kr/hp/cdhg0130.do",
+        "iframes": [],
+        "clickable": [
+          {
+            "tag": "A",
+            "text": "본문 바로가기",
+            "href": "#content",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "주메뉴 바로가기",
+            "href": "#gnb",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "신한라이프",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "신한라이프",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": "blind"
+          },
+          {
+            "tag": "A",
+            "text": "로그인",
+            "href": "https://cyber.shinhanlife.co.kr/",
+            "onclick": "",
+            "id": "",
+            "cls": "links uiAct"
+          },
+          {
+            "tag": "A",
+            "text": "공시실",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": "links uiAct"
+          },
+          {
+            "tag": "A",
+            "text": "회사소개",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": "links uiAct"
+          },
+          {
+            "tag": "A",
+            "text": "디지털보험",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": "links uiAct"
+          },
+          {
+            "tag": "LI",
+            "text": "사이버창구",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "사이버창구",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "사이버창구",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "보험계약조회",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "보험계약조회",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "보험계약조회",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "보험계약조회",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "변액보험계약조회",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "변액보험계약조회",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "변액보험계약조회",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "보험거래내역",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "보험거래내역",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "보험거래내역",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "금리연동형공시실",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "금리연동형공시실",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "금리연동형공시실",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "연금저축보험공시실",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "연금저축보험공시실",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "연금저축보험공시실",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "해피콜결과조회",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "해피콜결과조회",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "해피콜결과조회",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "보험계약변경",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "펀드변경/자동재배분",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "펀드변경/자동재배분",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "펀드변경/자동재배분",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "펀드변경/자동재배분내역",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "펀드변경/자동재배분내역",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "펀드변경/자동재배분내역",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "감액/특약해지(해약)",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "감액/특약해지(해약)",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "감액/특약해지(해약)",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "연금정보변경",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "연금정보변경",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "연금정보변경",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "보험계약변경내역",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "보험계약변경내역",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "보험계약변경내역",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "갱신변경",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "갱신변경",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "갱신변경",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "청약철회신청/취소",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          }
+        ],
+        "urlMatches": [
+          "http://www.shinhanlife.co.kr/",
+          "https://www.shinhanlife.co.kr/resources/images/cdh/common/logo_square.png",
+          "https://www.shinhanlife.co.kr/resources/images/fav/icon_72.png",
+          "https://www.shinhanlife.co.kr/resources/images/fav/icon_96.png",
+          "https://www.shinhanlife.co.kr/resources/images/fav/icon_144.png",
+          "https://www.shinhanlife.co.kr/resources/images/fav/icon_192.png",
+          "https://www.shinhanlife.co.kr/resources/images/fav/icon_310.png",
+          "https://www.shinhanlife.co.kr/resources/images/fav/icon_1024.png",
+          "https://www.shinhanlife.co.kr",
+          "https://youtube.com/c/shinhanlife_official",
+          "https://instagram.com/shinhanlife.official",
+          "https://smartform.shinhanlife.co.kr:10043/PreviewServer/",
+          "https://aibot.shinhanlife.co.kr",
+          "https://www.shinhanlife.co.kr:443/",
+          "https://e.shinhanlife.co.kr:443/",
+          "https://mc.shinhanlife.co.kr/",
+          "https://mo.shinhanlife.co.kr/",
+          "https://mobile.shinhanlife.co.kr",
+          "https://cyber.shinhanlife.co.kr/",
+          "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A106",
+          "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A103",
+          "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A042",
+          "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A104",
+          "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A102",
+          "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A027",
+          "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A040",
+          "https://shinhanlife.sinbiun.com/unse/tarot/tarot.php?unse_code=A213",
+          "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A002",
+          "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A105",
+          "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A044",
+          "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=B017",
+          "https://www.instagram.com/shinhanlife.official/",
+          "https://www.shinhangroup.com/kr/main",
+          "https://www.shinhan.com",
+          "https://www.shinhancard.com",
+          "https://www.shinhansec.com",
+          "https://www.shinhanfund.com",
+          "https://www.shinhansavings.com",
+          "https://www.shinhantrust.kr",
+          "https://www.shinhands.co.kr",
+          "https://www.shinhanci.co.kr",
+          "https://www.shinhanfundpartners.com",
+          "http://www.shinhanrem.com",
+          "https://www.shinhanvc.com/kr",
+          "https://www.shinhanez.co.kr",
+          "https://www.shinhanfoundation.or.kr"
+        ],
+        "doMatches": [
+          "/hp/cdhg0500.do",
+          "/hp/cdhg0600.do",
+          "/hp/cdhg0390.do",
+          "/hp/cdhg0700.do",
+          "/hp/cdhg0121.do",
+          "/hp/cdhg0120.do",
+          "/hp/cdhg0122.do",
+          "/hp/cdhg0230.do",
+          "/hp/cdhg0240.do",
+          "/hp/cdhg0280.do",
+          "/hp/cdhg0250.do",
+          "/hp/cdhg0090.do",
+          "/hp/cdhg0130.do",
+          "/hp/cdhg0020.do",
+          "/hp/cdhg0050.do"
+        ]
+      },
+      "formAction": {
+        "clicked": "2026 건강운세\n\n이달의 건강흐름을 확인 해보세요.\n\nN E W",
+        "inputCount": 2,
+        "inputs": [
+          {
+            "tag": "INPUT",
+            "type": "hidden",
+            "name": "",
+            "id": "paramSht",
+            "title": "",
+            "placeholder": ""
+          },
+          {
+            "tag": "INPUT",
+            "type": "text",
+            "name": "",
+            "id": "coSearchKeyword",
+            "title": "검색어 입력",
+            "placeholder": "검색어를 입력해주세요"
+          }
+        ]
+      }
+    }
   },
   "tomorrow": {
-    "date": "2026-11-14",
-    "status": "error",
-    "message": "Page.goto: Timeout 45000ms exceeded.\nCall log:\n  - navigating to \"https://www.shinhanlife.co.kr/hp/cdhg0130.do\", waiting until \"networkidle\"\n"
+    "date": "2026-11-15",
+    "status": "success",
+    "score": null,
+    "luckyColor": null,
+    "paragraphs": [],
+    "rawText": "본문 바로가기\n\t\t주메뉴 바로가기\n\t\n\t\n\t\n\t\n\t\t\n\t\t\n\t\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\t\t\t운세/사주\n\t\t\n\t\n\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\n\t\n\n\n\t\t\n\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t상단으로 이동\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t앱설치\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t챗봇 보험에 대해 궁금한가요? 챗봇에게 물어보세요~!\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t카카오\n\t\t\t\t\t\t\tURL 복사\n\t\t\t\t\t\t\t더보기\n\t\t\t\n\t\t\t\t\t\t\t닫기",
+    "debugInfo": {
+      "frameUrl": "https://www.shinhanlife.co.kr/hp/cdhg0140.do",
+      "allFrames": [
+        "https://www.shinhanlife.co.kr/hp/cdhg0140.do",
+        "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A106",
+        "about:blank"
+      ],
+      "pageScan": {
+        "currentUrl": "https://www.shinhanlife.co.kr/hp/cdhg0130.do",
+        "iframes": [],
+        "clickable": [
+          {
+            "tag": "A",
+            "text": "본문 바로가기",
+            "href": "#content",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "주메뉴 바로가기",
+            "href": "#gnb",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "신한라이프",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "신한라이프",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": "blind"
+          },
+          {
+            "tag": "A",
+            "text": "로그인",
+            "href": "https://cyber.shinhanlife.co.kr/",
+            "onclick": "",
+            "id": "",
+            "cls": "links uiAct"
+          },
+          {
+            "tag": "A",
+            "text": "공시실",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": "links uiAct"
+          },
+          {
+            "tag": "A",
+            "text": "회사소개",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": "links uiAct"
+          },
+          {
+            "tag": "A",
+            "text": "디지털보험",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": "links uiAct"
+          },
+          {
+            "tag": "LI",
+            "text": "사이버창구",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "사이버창구",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "사이버창구",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "보험계약조회",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "보험계약조회",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "보험계약조회",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "보험계약조회",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "변액보험계약조회",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "변액보험계약조회",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "변액보험계약조회",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "보험거래내역",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "보험거래내역",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "보험거래내역",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "금리연동형공시실",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "금리연동형공시실",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "금리연동형공시실",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "연금저축보험공시실",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "연금저축보험공시실",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "연금저축보험공시실",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "해피콜결과조회",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "해피콜결과조회",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "해피콜결과조회",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "보험계약변경",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "펀드변경/자동재배분",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "펀드변경/자동재배분",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "펀드변경/자동재배분",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "펀드변경/자동재배분내역",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "펀드변경/자동재배분내역",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "펀드변경/자동재배분내역",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "감액/특약해지(해약)",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "감액/특약해지(해약)",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "감액/특약해지(해약)",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "연금정보변경",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "연금정보변경",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "연금정보변경",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "보험계약변경내역",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "보험계약변경내역",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "보험계약변경내역",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "갱신변경",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "A",
+            "text": "갱신변경",
+            "href": "#",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "SPAN",
+            "text": "갱신변경",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          },
+          {
+            "tag": "LI",
+            "text": "청약철회신청/취소",
+            "href": "",
+            "onclick": "",
+            "id": "",
+            "cls": ""
+          }
+        ],
+        "urlMatches": [
+          "http://www.shinhanlife.co.kr/",
+          "https://www.shinhanlife.co.kr/resources/images/cdh/common/logo_square.png",
+          "https://www.shinhanlife.co.kr/resources/images/fav/icon_72.png",
+          "https://www.shinhanlife.co.kr/resources/images/fav/icon_96.png",
+          "https://www.shinhanlife.co.kr/resources/images/fav/icon_144.png",
+          "https://www.shinhanlife.co.kr/resources/images/fav/icon_192.png",
+          "https://www.shinhanlife.co.kr/resources/images/fav/icon_310.png",
+          "https://www.shinhanlife.co.kr/resources/images/fav/icon_1024.png",
+          "https://www.shinhanlife.co.kr",
+          "https://youtube.com/c/shinhanlife_official",
+          "https://instagram.com/shinhanlife.official",
+          "https://smartform.shinhanlife.co.kr:10043/PreviewServer/",
+          "https://aibot.shinhanlife.co.kr",
+          "https://www.shinhanlife.co.kr:443/",
+          "https://e.shinhanlife.co.kr:443/",
+          "https://mc.shinhanlife.co.kr/",
+          "https://mo.shinhanlife.co.kr/",
+          "https://mobile.shinhanlife.co.kr",
+          "https://cyber.shinhanlife.co.kr/",
+          "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A106",
+          "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A103",
+          "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A042",
+          "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A104",
+          "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A102",
+          "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A027",
+          "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A040",
+          "https://shinhanlife.sinbiun.com/unse/tarot/tarot.php?unse_code=A213",
+          "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A002",
+          "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A105",
+          "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A044",
+          "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=B017",
+          "https://www.instagram.com/shinhanlife.official/",
+          "https://www.shinhangroup.com/kr/main",
+          "https://www.shinhan.com",
+          "https://www.shinhancard.com",
+          "https://www.shinhansec.com",
+          "https://www.shinhanfund.com",
+          "https://www.shinhansavings.com",
+          "https://www.shinhantrust.kr",
+          "https://www.shinhands.co.kr",
+          "https://www.shinhanci.co.kr",
+          "https://www.shinhanfundpartners.com",
+          "http://www.shinhanrem.com",
+          "https://www.shinhanvc.com/kr",
+          "https://www.shinhanez.co.kr",
+          "https://www.shinhanfoundation.or.kr"
+        ],
+        "doMatches": [
+          "/hp/cdhg0500.do",
+          "/hp/cdhg0600.do",
+          "/hp/cdhg0390.do",
+          "/hp/cdhg0700.do",
+          "/hp/cdhg0121.do",
+          "/hp/cdhg0120.do",
+          "/hp/cdhg0122.do",
+          "/hp/cdhg0230.do",
+          "/hp/cdhg0240.do",
+          "/hp/cdhg0280.do",
+          "/hp/cdhg0250.do",
+          "/hp/cdhg0090.do",
+          "/hp/cdhg0130.do",
+          "/hp/cdhg0020.do",
+          "/hp/cdhg0050.do"
+        ]
+      },
+      "formAction": {
+        "clicked": "2026 건강운세\n\n이달의 건강흐름을 확인 해보세요.\n\nN E W",
+        "inputCount": 2,
+        "inputs": [
+          {
+            "tag": "INPUT",
+            "type": "hidden",
+            "name": "",
+            "id": "paramSht",
+            "title": "",
+            "placeholder": ""
+          },
+          {
+            "tag": "INPUT",
+            "type": "text",
+            "name": "",
+            "id": "coSearchKeyword",
+            "title": "검색어 입력",
+            "placeholder": "검색어를 입력해주세요"
+          }
+        ]
+      }
+    }
   }
 }
