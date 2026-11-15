@@ -1,8 +1,8 @@
 {
-  "updatedAtKST": "2026-11-15 00:39:47",
+  "updatedAtKST": "2026-11-16 00:40:20",
   "birthProfile": "1978-12-07 08:00 (양력/진시)",
   "today": {
-    "date": "2026-11-15",
+    "date": "2026-11-16",
     "status": "success",
     "score": null,
     "luckyColor": null,
@@ -510,7 +510,7 @@
     }
   },
   "tomorrow": {
-    "date": "2026-11-16",
+    "date": "2026-11-17",
     "status": "success",
     "score": null,
     "luckyColor": null,
@@ -520,8 +520,7 @@
       "frameUrl": "https://www.shinhanlife.co.kr/hp/cdhg0140.do",
       "allFrames": [
         "https://www.shinhanlife.co.kr/hp/cdhg0140.do",
-        "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A106",
-        "about:blank"
+        "https://shinhanlife.sinbiun.com/unse/saju/saju.php?unse_code=A106"
       ],
       "pageScan": {
         "currentUrl": "https://www.shinhanlife.co.kr/hp/cdhg0130.do",
