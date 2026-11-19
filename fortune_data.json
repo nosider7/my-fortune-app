@@ -1,8 +1,8 @@
 {
-  "updatedAtKST": "2026-11-19 00:59:53",
+  "updatedAtKST": "2026-11-20 00:59:24",
   "birthProfile": "1978-12-07 08:00 (양력/진시)",
   "today": {
-    "date": "2026-11-19",
+    "date": "2026-11-20",
     "status": "success",
     "score": null,
     "luckyColor": null,
@@ -510,7 +510,7 @@
     }
   },
   "tomorrow": {
-    "date": "2026-11-20",
+    "date": "2026-11-21",
     "status": "success",
     "score": null,
     "luckyColor": null,
